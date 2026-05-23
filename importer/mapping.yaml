@@ -1,0 +1,81 @@
+# 字段映射配置（需要根据目标网页表单实际 DOM 完善 selector）
+#
+# 使用说明：
+# - csv_columns：CSV 表头（固定）
+# - fields：网页字段映射（selector/类型/清洗规则/枚举映射）
+# - success_criteria：保存成功的判定方式（toast 文案、跳转规则等）
+#
+# 注意：selector 建议优先使用 data-testid / name / id；避免脆弱的“可见文本 XPath”
+
+csv_columns:
+  - 所在时段
+  - 点位名称
+  - 点位坐标
+  - 点位解说
+  - 地址
+  - 图片标题
+  - 图片来源
+  - 对应的展览章节
+
+fields:
+  所在时段:
+    type: select
+    selector: "" # TODO：例如 'select[name="period"]'
+    enum_map: {} # TODO：例如 {"明清时期":"mingqing", "民国时期":"minguo"}
+
+  点位名称:
+    type: text
+    selector: "" # TODO：例如 'input[name="title"]'
+    trim: true
+
+  点位解说:
+    type: textarea
+    selector: "" # TODO：例如 'textarea[name="description"]'
+    trim: true
+
+  地址:
+    type: text
+    selector: "" # TODO
+    trim: true
+    empty_policy: skip # skip | clear | default
+    default_value: ""
+
+  坐标:
+    # 录入方式二选一：lon_lat_inputs 或 map_widget
+    mode: lon_lat_inputs
+    lon_selector: "" # TODO：例如 'input[name="longitude"]'
+    lat_selector: "" # TODO：例如 'input[name="latitude"]'
+    # mode: map_widget
+    # map_click_selector: ""  # TODO：地图画布/容器
+
+  图片:
+    # 录入方式二选一：file_upload 或 url_input
+    mode: file_upload
+    file_input_selector: "" # TODO：例如 'input[type="file"][name="image"]'
+    # mode: url_input
+    # url_selector: ""       # TODO：例如 'input[name="imageUrl"]'
+
+  图片标题:
+    type: text
+    selector: "" # TODO
+    trim: true
+
+  图片来源:
+    type: text
+    selector: "" # TODO
+    trim: true
+
+  对应的展览章节:
+    # 可能是单字段文本，也可能是两级选择
+    mode: text
+    selector: "" # TODO
+    # mode: two_level_select
+    # level1_selector: "" # TODO
+    # level2_selector: "" # TODO
+
+success_criteria:
+  # 三选一或多选：以任一满足即可视为成功
+  toast_text_contains: []  # TODO：例如 ["保存成功","提交成功"]
+  url_regex: ""           # TODO：例如 ".*/detail/\\d+$"
+  page_text_contains: []  # TODO：例如 ["保存成功"]
+

@@ -1,0 +1,26 @@
+{
+  "targetUrl": "",
+  "mode": "create",
+  "input": {
+    "uploadedCsvPath": "computer:///sessions/6a0bebc96ee444f972258019/uploads/cbbf56da-1df1-44b3-9dce-fd12ae0bc8ca_%E6%95%B0%E6%8D%AE%E6%95%B4%E7%90%86%20%E7%82%B9%E4%BD%8D%20%E5%AE%8C%E6%95%B4.csv",
+    "imageBaseDir": ""
+  },
+  "outputDir": "workspace/importer/out",
+  "retry": {
+    "maxAttempts": 3,
+    "waitMs": 800
+  },
+  "timeouts": {
+    "navigationMs": 30000,
+    "selectorMs": 15000
+  },
+  "checkpoint": {
+    "enabled": true,
+    "file": "workspace/importer/out/checkpoint.json"
+  },
+  "logging": {
+    "jsonl": "workspace/importer/out/run_log.jsonl",
+    "screenshotOnFailDir": "workspace/importer/out/screenshots"
+  }
+}
+

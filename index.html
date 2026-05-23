@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Google AI Studio App</title>
+    <script>
+      // Defensive fix for environments where window.fetch is a read-only getter.
+      // Some libraries or polyfills attempt to overwrite window.fetch, which 
+      // fails if the environment has defined it as a getter without a setter.
+      (function() {
+        try {
+          const target = window;
+          const prop = 'fetch';
+          const originalFetch = target[prop];
+          
+          // Check if it's already a getter-only property
+          const descriptor = Object.getOwnPropertyDescriptor(target, prop) || 
+                             Object.getOwnPropertyDescriptor(Object.getPrototypeOf(target), prop);
+          
+          if (descriptor && !descriptor.set) {
+            Object.defineProperty(target, prop, {
+              get: function() { return originalFetch; },
+              set: function(v) { 
+                console.warn('Polyfill attempt to overwrite window.fetch was blocked to prevent crash.'); 
+              },
+              configurable: true,
+              enumerable: true
+            });
+          }
+        } catch (e) {
+          // Fallback: just try to ignore errors if this happens elsewhere
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

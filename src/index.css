@@ -1,0 +1,386 @@
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Noto+Serif+SC:wght@400;500;700;900&display=swap');
+@import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
+
+@theme {
+  --font-serif: "Noto Serif SC", "Crimson Pro", "Georgia", "STSong", "SimSun", serif;
+  --font-sans: "Inter", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica", "Arial", sans-serif;
+  --font-mono: "JetBrains Mono", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono", monospace;
+  
+  --color-archive-bg: #f4f1ea;
+  --color-archive-surface: #fdfcf8;
+  --color-archive-border: #dcd7ce;
+  --color-archive-text: #5a574f;
+  --color-archive-dark: #2c2a26;
+  --color-archive-accent: #8c7b63;
+  --color-archive-map-bg: #ece6d9;
+  
+  --shadow-archive: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+@layer base {
+  body {
+    @apply bg-archive-bg text-archive-text antialiased font-serif;
+  }
+  
+  button, input, textarea, select {
+    font-family: inherit;
+  }
+}
+
+.paper-texture {
+  position: relative;
+  background-color: var(--color-archive-bg);
+}
+
+.paper-texture::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+  pointer-events: none;
+  background-image: url("https://www.transparenttextures.com/patterns/handmade-paper.png");
+  z-index: 100;
+}
+
+.sidebar-border {
+  @apply border-r border-archive-border shadow-[4px_0_15px_rgba(0,0,0,0.02)];
+}
+
+.leaflet-container {
+  @apply w-full h-full bg-archive-map-bg!;
+}
+
+/* 档案地图滤镜：模拟纸质地籍图风格 */
+.archive-map .leaflet-tile-pane {
+  -webkit-filter: grayscale(100%) sepia(30%) contrast(85%) brightness(105%);
+  filter: grayscale(100%) sepia(30%) contrast(85%) brightness(105%);
+  will-change: filter;
+}
+
+/* Custom Marker Styles */
+.archive-marker-icon {
+  @apply transition-transform duration-300;
+}
+
+.archive-marker-icon:hover {
+  transform: scale(1.1) rotate(5deg);
+}
+
+/* Path Transitions */
+path.leaflet-interactive {
+  cursor: pointer !important;
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
+              stroke 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
+              fill 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+              filter 0.3s ease;
+}
+
+path.leaflet-interactive:hover {
+  filter: brightness(1.1) saturate(1.2);
+  opacity: 1 !important;
+}
+
+/* Scrollbar Styling */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-archive-border/50 rounded-full hover:bg-archive-accent/50 transition-colors;
+}
+
+/* Archive Stamp Effect */
+.archive-stamp {
+  @apply border-2 border-archive-accent/40 text-archive-accent/60 font-bold uppercase tracking-tighter px-2 py-0.5 rounded rotate-[-12deg] text-[10px] inline-block mix-blend-multiply;
+}
+
+/* Popup Custom Carousel */
+.popup-image-container {
+  @apply flex snap-x snap-mandatory overflow-x-auto w-full h-full;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.popup-image-container::-webkit-scrollbar {
+  display: none;
+}
+
+.custom-archive-popup .leaflet-popup-content-wrapper {
+  @apply rounded-none p-0 overflow-hidden border border-archive-border shadow-2xl bg-archive-surface!;
+}
+
+.custom-archive-popup .leaflet-popup-content {
+  @apply m-0 w-full!;
+}
+
+.popup-image-item {
+  @apply flex-shrink-0 w-full h-full snap-center;
+}
+
+/* River Flow Animation */
+.river-flow-animation {
+  animation: river-flow 6s linear infinite;
+}
+
+@keyframes river-flow {
+  from {
+    stroke-dashoffset: 60;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Road Flow Animation */
+.road-flow-animation {
+  animation: road-flow 12s linear infinite;
+}
+
+@keyframes road-flow {
+  from {
+    stroke-dashoffset: -50;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Archive Scrollbar Styles */
+.archive-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-archive-accent) transparent;
+  scrollbar-gutter: stable;
+}
+
+.archive-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.archive-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.archive-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--color-archive-accent);
+  border-radius: 0px;
+}
+
+.archive-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-archive-dark);
+}
+
+/* Onboarding Animations */
+.animate-bounce-x {
+  animation: bounce-x 1s infinite;
+}
+
+@keyframes bounce-x {
+  0%, 100% {
+    transform: translateX(-25%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: translateX(0);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+.animate-bounce-x-reverse {
+  animation: bounce-x-reverse 1s infinite;
+}
+
+@keyframes bounce-x-reverse {
+  0%, 100% {
+    transform: translateX(25%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: translateX(0);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+/* Archive Controls */
+.nav-dot-active {
+  @apply bg-archive-dark shadow-[0_0_8px_rgba(44,42,38,0.3)] scale-150;
+}
+
+.nav-dot-inactive {
+  @apply bg-archive-accent/30 grayscale hover:grayscale-0 hover:bg-archive-accent/60;
+}
+
+/* ============================================================
+   MOBILE OPTIMIZATION (MAX-WIDTH: 768PX)
+   ============================================================ */
+@media (max-width: 768px) {
+  /* ROOT LAYOUT: Allow vertical scrolling of the entire app */
+  /* Target the outer wrapper added in App.tsx */
+  div.min-h-screen.w-full.bg-archive-dark {
+    background-color: var(--color-archive-bg) !important;
+    display: block !important;
+    min-height: 0 !important;
+    height: auto !important;
+  }
+
+  .flex-col.h-screen.max-w-\[1920px\] {
+    height: auto !important;
+    min-height: 100vh;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    max-width: none !important;
+    box-shadow: none !important;
+    position: relative !important;
+  }
+
+  /* HEADER: Stack labels and buttons */
+  header {
+    padding: 1rem !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 0.75rem !important;
+    height: auto !important;
+  }
+  header h1 {
+    font-size: 1.5rem !important;
+    letter-spacing: 1px !important;
+  }
+  header .flex.items-center.gap-6 {
+    margin: 0 !important;
+    justify-content: center;
+  }
+  header .flex.items-center.gap-3 {
+    justify-content: center;
+  }
+  header .flex.items-center.gap-10 {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  /* MAIN WRAPPER: Stack Timeline, Map, and Sidebar vertically */
+  .flex-1.flex.overflow-hidden {
+    flex-direction: column !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* TIMELINE: Full width, horizontal period selection */
+  nav.w-56 {
+    width: 100% !important;
+    height: auto !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--color-archive-border) !important;
+    padding: 0.5rem 1rem !important;
+  }
+  nav.w-56 .flex-1 {
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    gap: 1.25rem !important;
+    overflow-x: auto !important;
+    scrollbar-width: none !important;
+  }
+  nav.w-56 .flex-1::-webkit-scrollbar {
+    display: none !important;
+  }
+  nav.w-56 button {
+    padding: 0.25rem !important;
+    flex-direction: column !important;
+    gap: 0.15rem !important;
+    align-items: center !important;
+    min-width: 0;
+  }
+  nav.w-56 button .flex-col {
+    display: flex !important;
+    width: 100%;
+    align-items: center;
+  }
+  nav.w-56 button span:nth-of-type(1) {
+    font-size: 0.75rem !important;
+    text-align: center;
+    width: 100%;
+  }
+  nav.w-56 button span:nth-of-type(2) {
+    display: none !important;
+  }
+  nav.w-56 .absolute.left-0 {
+    display: none !important;
+  }
+  nav.w-56 button .relative.flex {
+     transform: scale(0.8);
+  }
+
+  /* LEGEND: Grid layout for better mobile fit */
+  nav.w-56 .mt-auto {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.75rem !important;
+    margin-top: 1rem !important;
+    padding: 1rem 0 0 0 !important;
+    border-top: 1px solid var(--color-archive-border) !important;
+  }
+  nav.w-56 .mt-auto .space-y-4 {
+    display: contents !important;
+  }
+  nav.w-56 .mt-auto h4 {
+    grid-column: span 2;
+    text-align: center;
+    margin-bottom: 0.25rem;
+  }
+  nav.w-56 .mt-auto .flex.items-center {
+    justify-content: flex-start;
+  }
+
+  /* MAP: Fixed height for visibility, reduce heavy framing */
+  main.archive-map {
+    height: 350px !important;
+    width: 100% !important;
+    border-width: 8px !important;
+    border-left: none !important;
+    border-right: none !important;
+    z-index: 10 !important;
+    flex: none !important;
+  }
+
+  /* SIDEBAR (SidebarDefault & FeatureDetail) */
+  aside.w-\[450px\] {
+    width: 100% !important;
+    height: auto !important;
+    min-height: min-content !important;
+    border-left: none !important;
+    border-top: 1px solid var(--color-archive-border) !important;
+    overflow: visible !important;
+    position: relative !important;
+  }
+  
+  /* PADDING REDUCTION for better screen utilization */
+  .p-10, .p-12 {
+    padding: 1.25rem !important;
+  }
+  
+  /* GALLERY: Adjust widths */
+  .snap-center.w-\[85\%\], .snap-center.w-\[88\%\] {
+    width: 92% !important;
+  }
+
+  /* ZOOMED IMAGE: Make exit button larger for touch */
+  .fixed.inset-0 .absolute.top-10.right-10 {
+    top: 1.5rem !important;
+    right: 1.5rem !important;
+  }
+}
