@@ -44,6 +44,9 @@ function MapController() {
       map.scrollWheelZoom.disable();
       map.boxZoom.disable();
       map.keyboard.disable();
+      map.touchRotate?.disable?.();
+      map.shiftKeyRotate?.disable?.();
+      map.compassBearing?.disable?.();
       if (map.tap) map.tap.disable();
 
       // 防止惯性造成尾部位移（进一步确保“完全固定”）

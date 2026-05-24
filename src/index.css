@@ -51,6 +51,12 @@
   @apply w-full h-full bg-archive-map-bg!;
 }
 
+.archive-map .leaflet-control-rotate-toggle,
+.archive-map .leaflet-control-rotate-arrow {
+  pointer-events: none;
+  cursor: default !important;
+}
+
 /* 档案地图滤镜：模拟纸质地籍图风格 */
 .archive-map .leaflet-tile-pane {
   -webkit-filter: grayscale(100%) sepia(30%) contrast(85%) brightness(105%);
