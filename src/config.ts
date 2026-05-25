@@ -19,7 +19,7 @@ export const MAP_CONFIG = {
   // 视觉控制参数
   VISUAL: {
     BEARING: 35,          // 旋转角度 (顺时针度数)
-    ZOOM_OFFSET: 0.5,      // 缩放偏移量 (值越大越近)
+    ZOOM_OFFSET: 0.4,      // 缩放偏移量 (值越大越近)
     LAT_OFFSET: 0.0,       // 经纬度垂直偏移量 (用于微调视窗焦点)
     LNG_OFFSET: 0.0,       // 经纬向水平偏移量
   },
